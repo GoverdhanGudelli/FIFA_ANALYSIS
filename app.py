@@ -32,19 +32,23 @@ st.caption(
 def load_data():
 
     male_players = pd.read_csv(
-        "data/male_players_dashboard.csv"
+        "data/male_players_dashboard.csv",
+        low_memory=False
     )
 
     female_players = pd.read_csv(
-        "data/female_players_dashboard.csv"
+        "data/female_players_dashboard.csv",
+        low_memory=False
     )
 
     male_teams = pd.read_csv(
-        "data/male_teams_dashboard.csv"
+        "data/male_teams_dashboard.csv",
+        low_memory=False
     )
 
     female_teams = pd.read_csv(
-        "data/female_teams_dashboard.csv"
+        "data/female_teams_dashboard.csv",
+        low_memory=False
     )
 
     return (
