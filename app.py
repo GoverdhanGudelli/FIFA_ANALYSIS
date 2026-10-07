@@ -1,6 +1,21 @@
+import os
+import subprocess
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+
+
+def ensure_lfs_data():
+    sample_file = "data/male_teams_dashboard.csv"
+    if os.path.exists(sample_file):
+        try:
+            with open(sample_file, "r", encoding="utf-8", errors="ignore") as f:
+                content = f.read(100)
+                if "version https://git-lfs" in content:
+                    subprocess.run(["git", "lfs", "install"], check=True)
+                    subprocess.run(["git", "lfs", "pull"], check=True)
+        except Exception:
+            pass
 
 
 # ============================================================
@@ -30,6 +45,7 @@ st.caption(
 
 @st.cache_data
 def load_data():
+    ensure_lfs_data()
 
     male_players = pd.read_csv(
         "data/male_players_dashboard.csv",
@@ -139,7 +155,7 @@ if page == "🏠 Overview":
 
     st.plotly_chart(
         fig,
-        use_container_width=True
+        width="stretch"
     )
 
     st.subheader("Average Player Ratings")
@@ -166,7 +182,7 @@ if page == "🏠 Overview":
 
     st.plotly_chart(
         fig,
-        use_container_width=True
+        width="stretch"
     )
 
 
@@ -301,7 +317,7 @@ elif page == "👤 Player Analytics":
 
     st.plotly_chart(
         fig,
-        use_container_width=True
+        width="stretch"
     )
 
     # -------------------------------
@@ -330,7 +346,7 @@ elif page == "👤 Player Analytics":
 
         st.plotly_chart(
             fig,
-            use_container_width=True
+            width="stretch"
         )
 
     # -------------------------------
@@ -357,7 +373,7 @@ elif page == "👤 Player Analytics":
         .sort_values("overall", ascending=False)
         [display_cols]
         .head(50),
-        use_container_width=True
+        width="stretch"
     )
 
 
@@ -446,7 +462,7 @@ elif page == "🏟️ Team Analytics":
 
         st.plotly_chart(
             fig,
-            use_container_width=True
+            width="stretch"
         )
 
     # Attack / Midfield / Defence
@@ -478,7 +494,7 @@ elif page == "🏟️ Team Analytics":
 
             st.plotly_chart(
                 fig,
-                use_container_width=True
+                width="stretch"
             )
 
 
@@ -571,7 +587,7 @@ elif page == "🔗 Player–Team Analytics":
 
                     st.dataframe(
                         team_row,
-                        use_container_width=True
+                        width="stretch"
                     )
 
                 else:
@@ -686,7 +702,7 @@ elif page == "⚥ Male vs Female":
 
     st.dataframe(
         comparison,
-        use_container_width=True
+        width="stretch"
     )
 
     fig = px.bar(
@@ -699,7 +715,7 @@ elif page == "⚥ Male vs Female":
 
     st.plotly_chart(
         fig,
-        use_container_width=True
+        width="stretch"
     )
 
     st.warning(
