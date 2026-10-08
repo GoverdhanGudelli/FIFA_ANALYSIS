@@ -797,8 +797,127 @@ elif page == "📚 Research & Findings":
     **4. Felipe et al. (2020)**  
     Team variables, player positions, age and footballer value.
     """)
+   
 
-    st.info(
-        "Add the final numerical findings from the completed "
-        "analysis notebook to this page."
+    st.markdown("---")
+
+    st.header("Final Numerical Findings")
+
+    # --- Key Metrics ---
+    st.subheader("Dataset Scope & Key Averages")
+    col1, col2, col3, col4 = st.columns(4)
+
+    with col1:
+        st.metric(label="Male Players", value="161,583")
+        st.caption("Unique Players: 49,699")
+
+    with col2:
+        st.metric(label="Female Players", value="3,196")
+        st.caption("Unique Players: 1,266")
+
+    with col3:
+        st.metric(label="Male Mean Overall", value="65.70")
+        st.caption("Mean Potential: 70.74")
+
+    with col4:
+        st.metric(label="Female Mean Overall", value="75.95")
+        st.caption("Mean Potential: 79.57")
+
+    st.markdown("---")
+
+    # --- Correlations ---
+    st.subheader("Key Correlations")
+    c1, c2, c3 = st.columns(3)
+
+    with c1:
+        st.metric(label="Overall ↔ Potential", value="0.695")
+
+    with c2:
+        st.metric(label="Overall ↔ Player Value", value="0.567")
+
+    with c3:
+        st.metric(label="Potential ↔ Player Value", value="0.534")
+
+    # Top Major Attribute Correlations Table
+    st.markdown("**Top Major Attribute Correlations with Overall Rating:**")
+    major_corr_data = pd.DataFrame(
+        {
+            "Attribute": [
+                "Passing",
+                "Dribbling",
+                "Physic",
+                "Shooting",
+                "Defending",
+            ],
+            "Correlation": [0.681, 0.607, 0.513, 0.482, 0.325],
+        }
     )
+    st.dataframe(major_corr_data, width="stretch", hide_index=True)
+
+    st.markdown("---")
+
+    # --- Best Regression Model ---
+    st.subheader("Best Performing Regression Model")
+    st.markdown("**Linear Regression (Overall Prediction)**")
+
+    m1, m2, m3, m4 = st.columns(4)
+    m1.metric("MAE", "2.0426")
+    m2.metric("MSE", "6.7444")
+    m3.metric("RMSE", "2.5970")
+    m4.metric("R² Score", "0.8596")
+
+    st.markdown("---")
+
+    # --- Top Future Star Candidates ---
+    st.subheader("Top Future Star Candidates (Highest Potential Gap)")
+    future_stars_df = pd.DataFrame(
+        [
+            {
+                "Name": "C. Burton",
+                "Age": 17,
+                "Overall": 50,
+                "Potential": 78,
+                "Gap": 28,
+                "Club": "Shrewsbury Town",
+                "Position": "GK",
+            },
+            {
+                "Name": "A. Gomes",
+                "Age": 16,
+                "Overall": 63,
+                "Potential": 89,
+                "Gap": 26,
+                "Club": "Manchester United",
+                "Position": "CAM",
+            },
+            {
+                "Name": "B. Arrey-Mbi",
+                "Age": 17,
+                "Overall": 60,
+                "Potential": 86,
+                "Gap": 26,
+                "Club": "FC Bayern München II",
+                "Position": "CB",
+            },
+            {
+                "Name": "M. Edwards",
+                "Age": 17,
+                "Overall": 58,
+                "Potential": 84,
+                "Gap": 26,
+                "Club": "Tottenham Hotspur",
+                "Position": "CAM",
+            },
+            {
+                "Name": "C. Gregory",
+                "Age": 17,
+                "Overall": 54,
+                "Potential": 80,
+                "Gap": 26,
+                "Club": "Shrewsbury Town",
+                "Position": "GK",
+            },
+        ]
+    )
+
+    st.dataframe(future_stars_df, width="stretch", hide_index=True)
